@@ -1,4 +1,4 @@
-package com.tp10.tp10jee;
+package com.tp10jee;
 
 import java.io.*;
 
