@@ -1,25 +1,47 @@
-<!DOCTYPE html>
-<html xmlns="http://xmlns.jcp.org/jsf/html"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Simple Facelet Page</title>
-</head>
-<body>
-<ui:fragment>
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Gestion des Articles</title>
+</h:head>
+<h:body>
+    <h:form id="form">
+        <p:growl/>
+        <p:commandButton value="Nouvel Produit"
+                         onclick="PF('dlg').show()"
+                         type="button"/>
+        <br/><br/>
 
-</ui:fragment>
+        <p:dataTable value="#{produitBean.produits}" var="a"
+                     rendered="#{not empty produitBean.produits}">
+            <p:column headerText="ID">#{a.id}</p:column>
+            <p:column headerText="Titre">#{a.name}</p:column>
+            <p:column headerText="Prix">#{a.price}</p:column>
+            <p:column headerText="Actions">
+                <p:commandButton value="Supprimer"
+                                 action="#{produitBean.delete(a.id)}"
+                                 update="form"/>
+            </p:column>
+        </p:dataTable>
 
-<h:form>
-    <h:outputLabel for="name" value=""/>
-    <h:inputText id="name" value=""/>
-    <h:commandButton value="Submit" action=""/>
-</h:form>
+        <h:outputText value="No articles yet. Please add one."
+                      rendered="#{empty produitBean.produits}"/>
+    </h:form>
 
-<ui:fragment>
-
-</ui:fragment>
-</body>
+    <!-- Dialog d'ajout -->
+    <p:dialog header="Nouvel Article" widgetVar="dlg" modal="true">
+        <h:form>
+            Titre
+            <p:inputText value="#{produitBean.produit.name}"/>
+            <br/><br/>
+            Prix
+            <p:inputText value="#{produitBean.produit.price}"/>
+            <br/><br/>
+            <p:commandButton value="Enregistrer"
+                             action="#{produitBean.save}"
+                             update=":form"
+                             oncomplete="PF('dlg').hide()"/>
+        </h:form>
+    </p:dialog>
+</h:body>
 </html>

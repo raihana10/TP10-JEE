@@ -1,25 +1,42 @@
-<!DOCTYPE html>
-<html xmlns="http://xmlns.jcp.org/jsf/html"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Simple Facelet Page</title>
-</head>
-<body>
-<ui:fragment>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Ajouter un Produit</title>
+</h:head>
+<h:body>
+    <h:form id="addForm">
+        <p:panel header="Ajouter un nouveau Produit">
 
-</ui:fragment>
+            <p:growl id="msgs" showDetail="true"/>
 
-<h:form>
-    <h:outputLabel for="name" value=""/>
-    <h:inputText id="name" value=""/>
-    <h:commandButton value="Submit" action=""/>
-</h:form>
+            <h:panelGrid columns="2" cellpadding="8">
 
-<ui:fragment>
+                <h:outputLabel for="name" value="Nom du produit :"/>
+                <p:inputText id="name"
+                             value="#{produitBean.produit.name}"
+                             required="true"
+                             requiredMessage="Le nom est obligatoire"/>
 
-</ui:fragment>
-</body>
+                <h:outputLabel for="price" value="Prix :"/>
+                <p:inputText id="price"
+                             value="#{produitBean.produit.price}"
+                             required="true"
+                             requiredMessage="Le prix est obligatoire"/>
+
+            </h:panelGrid>
+
+            <br/>
+            <p:commandButton value="Enregistrer"
+                             action="#{produitBean.save}"
+                             update="addForm"
+                             icon="pi pi-save"/>
+
+            <p:button value="Retour à la liste"
+                      outcome="listeProduit"
+                      icon="pi pi-arrow-left"/>
+        </p:panel>
+    </h:form>
+</h:body>
 </html>
